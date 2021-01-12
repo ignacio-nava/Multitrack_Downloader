@@ -1,0 +1,49 @@
+{% extends "base_bootstrap.html" %}
+{% block navbar %}
+{% load app_tags %} <!-- app para tener los gravatar del usuario -->
+<nav class="navbar navbar-expand-md navbar-dark ps-2" style="background-color: #5090b0;">
+  <div class="container-fluid">
+    <a class="navbar-brand p-2" href="{% url 'home:homepage' %}">
+      <span class="badge">MULTITRACK DOWNLOADER</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'multitracks:all' %}">Multitracks</a> 
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Uploads</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Reviews</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+        <div class="btn-group">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="active">{{ user.username }}</span>
+              {% if user|gravatar %}
+                <img class="rounded-circle border border-light" style="width: 30px;" src="{{ user|gravatar:70 }}">
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="{% url 'logout' %}?next={% url 'home:homepage' %}">Logout</a></li>
+            </ul>
+          </li>
+        </div>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'login' %}?next={% url 'home:homepage' %}">Login</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{{ settings.APP_NAME }}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <style>
+        .welcome-card {
+            color: #2d5366;
+        }
+        .nav-link {
+            color: #dce5ea !important;
+        }
+    </style>
+    {% block head %}{% endblock %}
+  </head>
+<body style="background-color: #f4f4f4;">
+  <div>
+    {% block navbar %} {% endblock %}
+  </div>
+  <main>
+    {% block welcome %} {% endblock %}
+    {% block messages %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-{{msg.level_tag}}" role="alert">
+        {{msg.message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% endblock %}
+        {% block content %}
+        {% endblock %}
+  </main>
+  <footer style="position: absolute;bottom: 0; width: 100%; height: 60px; line-height: 60px; background-color: #d9e4ea;">
+    <div class="container">
+      <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+  </footer>
+</body>
+</html>

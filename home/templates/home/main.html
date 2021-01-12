@@ -1,1 +1,12 @@
-<h1>Hello World!</h1>
+{% extends 'base_menu.html' %}
+{% block content %}
+<head>
+  <title>{{ settings.APP_NAME }}</title>
+</head>
+  <div class="welcome-card">
+    <h1>{{ settings.APP_NAME }}</h1>
+    <p>
+      This is an educational project that allows you to download multitracks, upload mixes, and get feedback from the community
+    </p>
+ </div>
+{% endblock %}
