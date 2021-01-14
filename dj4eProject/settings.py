@@ -47,10 +47,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'social_django',
+
+    # Font-awesome
+    'fontawesome-free',
 ]
 
 # When we get to crispy forms :)
-CRISPY_TEMPLATE_PACK = 'bootstrap5'  # Add
+CRISPY_TEMPLATE_PACK = 'bootstrap4'  # Add
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

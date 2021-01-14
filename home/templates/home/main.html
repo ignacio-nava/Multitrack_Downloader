@@ -1,12 +1,75 @@
 {% extends 'base_menu.html' %}
+
+{% block head %}
+  <style>
+    .index-img {
+      width: 20rem;
+    }
+  </style>
+{% endblock %}
 {% block content %}
-<head>
-  <title>{{ settings.APP_NAME }}</title>
-</head>
-  <div class="welcome-card">
-    <h1>{{ settings.APP_NAME }}</h1>
-    <p>
-      This is an educational project that allows you to download multitracks, upload mixes, and get feedback from the community
+<main>
+  <div class="mx-2 mt-2 py-4" style="background-color: #d9e4ea;">
+    <div class="container">
+      <div class="row row-cols-1 g-2 g-lg-3">
+        <div class="col d-flex justify-content-center">
+          <div class="pb-3">
+            <h1>Welcome!</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-center fs-5">
+      This a <strong>sample website</strong> where you can download multitracks, upload a mix, and get feedback from other users
     </p>
- </div>
+  </div>
+  <div class="container-fluid-lg mt-4">
+    <div class="row">
+      <!-- DOWNLOAD -->
+      <div class="text-center col-lg p-2">
+        <article class="p-2">
+          <a href="{% url 'multitracks:all' %}">
+            <img class="index-img"src='https://svgshare.com/i/T9f.svg' title='download-logo'/>
+          </a>
+          <div>
+            <a href="{% url 'multitracks:all' %}" style="text-decoration: none; color: #212529;">
+              <h2 class="card-title mt-4 mb-3">Get</h2>
+            </a>
+            <p class="card-text">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam rerum voluptatum voluptates a aperiam architecto obcaecati, pariatur in quis omnis cum itaque iusto? Mollitia, magnam corporis. Nulla fuga vero sed.
+            </p>
+          </div>
+        </article>
+      </div>
+      <!-- MIX -->
+      <div class="text-center col-lg p-2">
+        <article class="p-2">
+          <a href="{% url 'multitracks:all' %}">
+            <img class="index-img" src='https://svgshare.com/i/T8r.svg' title='mix-logo' />
+          </a>
+          <div>
+            <h2 class="card-title mt-4 mb-3">Mix</h2>
+            <p class="card-text">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam rerum voluptatum voluptates a aperiam architecto obcaecati, pariatur in quis omnis cum itaque iusto? Mollitia, magnam corporis. Nulla fuga vero sed.
+            </p>
+          </div>
+        </article>
+      </div>
+      <!-- SHOW -->
+      <div class="text-center col-lg p-2">
+        <article class="p-2">
+          <a href="{% url 'multitracks:all' %}">
+            <img class="index-img" src='https://svgshare.com/i/T80.svg' title='show-logo' />
+          </a>
+          <div>
+            <h2 class="card-title mt-4 mb-3">Show</h2>
+            <p class="card-text">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam rerum voluptatum voluptates a aperiam architecto obcaecati, pariatur in quis omnis cum itaque iusto? Mollitia, magnam corporis. Nulla fuga vero sed.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</main>
 {% endblock %}
