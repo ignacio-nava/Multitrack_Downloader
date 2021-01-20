@@ -1,2 +1,7 @@
 db.sqlite3
 .DS_Store
+.vscode
+home/static/home/node_modules
+home/static/home/sass
+package-lock.json
+package.json
