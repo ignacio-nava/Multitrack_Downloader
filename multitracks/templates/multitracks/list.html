@@ -1,4 +1,16 @@
 {% extends "base_menu.html" %}
 {% block content %}
 <h1>MULTITRACK LIST</h1>
+{% if user.is_staff %}
+    <div>
+        <a href="{% url 'multitracks:mt_create' %}">Upload</a>
+    </div>
+{% endif %}
+<div>
+    {% for mt in mt_list %}
+    <h1>{{ mt.title }}</h1>
+    <p>{{ mt.description }}</p>
+    <p><audio src="{{ mt.preview.url }}" controls></audio></p>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base_menu.html" %}
+{% block content %}
+{% if error_message %}
+    <p>
+        <strong>{{ error_message }}</strong>
+    </p>
+{% endif %}
+<p>
+    <form action="" method="post" id="upload_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Submit">
+        <input type="submit" value="Cancel" onclick="window.location.href='{% url 'multitracks:all' %}';return false;">
+    </form>
+  </p>
+{% endblock %}
