@@ -16,8 +16,8 @@ class Band(models.Model):
         max_length=200,
         validators=[MinLengthValidator(2, "Tittle must be grater than 2 characters")]   
     )
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
-    contact = models.URLField(max_length=200)
+    #genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+    contact = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -33,7 +33,7 @@ class Multitrack(models.Model):
     file_zip = models.FileField(upload_to="multitracks/")
     description = models.TextField()
     band = models.ForeignKey('Band', on_delete=models.CASCADE)
-    genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+    genre = models.ForeignKey('Genre', on_delete=models.SET_NULL, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

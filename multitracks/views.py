@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 
 from home.owner import OwnerListView, OwnerCreateView
-from .models import Multitrack
+from .models import Multitrack, Genre, Band
 from .forms import CreateForm
 
 class MtListView(OwnerListView):
@@ -23,8 +23,12 @@ class MtCreateView(OwnerCreateView):
 
     def get(self, request, pk=None):
         form = CreateForm()
+        genre_list = Genre.objects.all().order_by('name')
+        band_list = Band.objects.all().order_by('name')
         ctx = {
-            'form': form
+            'form': form,
+            'genre_list': genre_list,
+            'band_list': band_list,
         }
         return render(request, self.template_name, ctx)
 
@@ -36,18 +40,22 @@ class MtCreateView(OwnerCreateView):
             }
             return render(request, self.template_name, ctx)
 
-        print(form)
-
         track = form.save(commit=False)
         track.owner = self.request.user
-        track_type = track.preview.url.split('.')[-1].lower()
-        if not track_type == 'mp3':
+        preview_type = track.preview.url.split('.')[-1].lower()
+        if not preview_type == 'mp3':
             ctx = {
                 'form': form,
-                'error_message': 'Audio must be MP3'
+                'error_message': 'Preview must be MP3 file'
             }
             return render(request, self.template_name, ctx)
-        #track.content_type = track_type
+        file_zip_type = track.file_zip.url.split('.')[-1].lower()
+        if not file_zip_type == 'zip':
+            ctx = {
+                'form': form,
+                'error_message': 'Multitrack must be ZIP file'
+            }
+            return render(request, self.template_name, ctx)
         track.save()
         return redirect(self.success_url)
         
