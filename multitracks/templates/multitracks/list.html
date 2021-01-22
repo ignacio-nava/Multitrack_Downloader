@@ -1,16 +1,43 @@
 {% extends "base_menu.html" %}
+
+{% block head %}
+    <style>
+        body {
+            overflow: auto !important;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-<h1>MULTITRACK LIST</h1>
-{% if user.is_staff %}
-    <div>
-        <a href="{% url 'multitracks:mt_create' %}">Upload</a>
+<div class="py-3 border-bottom border-2" id="welcome">
+    <div class="container">
+        <div class="row row-cols-1 g-2 g-lg-3">
+            <div class="col d-flex justify-content-center">
+                <div class="pb-3">
+                    <h1>Multitrack List</h1>
+                </div>
+            </div>
+        </div>
     </div>
-{% endif %}
-<div>
-    {% for mt in mt_list %}
-    <h1>{{ mt.title }}</h1>
-    <p>{{ mt.description }}</p>
-    <p><audio src="{{ mt.preview.url }}" controls></audio></p>
-    {% endfor %}
+    <p class="text-center fs-5">Search all multitracks by genre or band <em>(soon!)</em></p>
+</div>
+<div class="container py-5 mb-5">
+    <div class="row justify-content-center">
+        {% for mt in mt_list %}
+            <div class="col-lg-5 m-2 px-0 card shadow card-multitack">
+                <div class="card-header">
+                    <h5 class="card-title">{{ mt.band }} - {{ mt.title }}</h5>
+                    <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><em>{{ mt.genre }}</em></p>
+                    <p><audio src="{{ mt.preview.url }}" controls></audio></p>
+                    <p class="card-text">{{ mt.number_channels }} tracks</p>
+                    <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
+                    <p class="card-text">{{ mt.description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

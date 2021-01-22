@@ -14,11 +14,11 @@
             <div class="card-body">
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
-                    <div class="form-floating mb-3">
+                    <div class="form-floating my-3">
                         <input type="text" class="form-control" placeholder="Enter username" id="id_username" name="username">
                         <label for="id_username">Username</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating my-3">
                         <input type="password" class="form-control" placeholder="Password" id="id_password" name="password">
                         <label for="id_password">Password</label>
                     </div>
