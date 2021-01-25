@@ -6,28 +6,31 @@ for (icon of icons) {
     icon.addEventListener("click", getIcon); 
 }
 
-function setPlayer(n) {
+function setPlay(n) {
+    previews[n].play();
+    playing = n
+    icons[n].className = "far fa-pause-circle fs-5";
+}
+
+function setPause(n) {
+    previews[n].pause();
+    icons[n].className = "far fa-play-circle fs-5";
+}
+
+function startPlaying(n) {
     if (playing < 0) {
-        previews[n].play();
-        playing = n
-        icons[n].className = "far fa-pause-circle fs-5";
+        setPlay(n);
     } else {
-        previews[playing].pause();
-        icons[playing].className = "far fa-play-circle fs-5";
-        previews[n].play();
-        playing = n;
-        icons[n].className = "far fa-pause-circle fs-5";
+        setPause(playing);
+        setPlay(n);
     }
 }
 
 function getIcon(event) {
-    n = event.srcElement.id.split('-')[1];
-    if (previews[n-1].paused) {
-        setPlayer(n-1);
+    n = icons.indexOf(event.srcElement);
+    if (previews[n].paused) {
+        startPlaying(n);
     } else {
-        previews[n-1].pause();
-        icons[n-1].className = "far fa-play-circle fs-5";
+        setPause(n);
     }
 }
-
-

@@ -30,11 +30,11 @@
                     <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
                 </div>
                 <div class="card-body">
-                    <audio class="w-100" id="mt-{{ mt.id }}">
+                    <audio class="w-100">
                         <source src="{{ mt.preview.url }}" type="audio/mp3">
                     </audio>
                     <p >
-                        Preview: <i class="far fa-play-circle fs-5" id="icon-{{mt.id}}"></i>
+                        Preview: <i class="far fa-play-circle fs-5"></i>
                     </p>
                     <p class="card-text">{{ mt.number_channels }} tracks</p>
                     <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
