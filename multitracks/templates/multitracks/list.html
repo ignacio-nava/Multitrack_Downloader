@@ -1,5 +1,5 @@
 {% extends "base_menu.html" %}
-
+{% load static %}
 {% block head %}
     <style>
         body {
@@ -30,8 +30,12 @@
                     <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
                 </div>
                 <div class="card-body">
-                    <p class="card-text"><em>{{ mt.genre }}</em></p>
-                    <p><audio src="{{ mt.preview.url }}" controls></audio></p>
+                    <audio class="w-100" id="mt-{{ mt.id }}">
+                        <source src="{{ mt.preview.url }}" type="audio/mp3">
+                    </audio>
+                    <p >
+                        Preview: <i class="far fa-play-circle fs-5" id="icon-{{mt.id}}"></i>
+                    </p>
                     <p class="card-text">{{ mt.number_channels }} tracks</p>
                     <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
                     <p class="card-text">{{ mt.description }}</p>
@@ -40,4 +44,5 @@
         {% endfor %}
     </div>
 </div>
+<script src="{% static 'home/javascript/script.js' %}"></script>
 {% endblock %}
