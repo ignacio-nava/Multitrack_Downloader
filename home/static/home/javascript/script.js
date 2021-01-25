@@ -6,6 +6,10 @@ for (icon of icons) {
     icon.addEventListener("click", getIcon); 
 }
 
+for (preview of previews) {
+    preview.addEventListener("ended", previewEnd); 
+}
+
 function setPlay(n) {
     previews[n].play();
     playing = n
@@ -33,4 +37,9 @@ function getIcon(event) {
     } else {
         setPause(n);
     }
+}
+
+function previewEnd(event) {
+    n = previews.indexOf(event.srcElement);
+    setPause(n)
 }
