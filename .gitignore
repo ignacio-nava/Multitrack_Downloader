@@ -2,7 +2,8 @@ db.sqlite3
 .DS_Store
 .vscode
 home/static/home/node_modules
-home/static/home/sass
+home/static/home/sass/custom.scss
+home/static/home/sass/reducido.css
 package-lock.json
 package.json
 media/

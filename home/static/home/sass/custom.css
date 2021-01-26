@@ -41,6 +41,15 @@ main h2, main .h2 {
       user-select: none;
 }
 
+.icon-download {
+  width: 1rem;
+  stroke: #0d6efd;
+}
+
+.icon-player {
+  color: #0d6efd;
+}
+
 #card-form-mt {
   background-color: #f4f4f4;
 }
