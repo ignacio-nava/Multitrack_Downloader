@@ -58,16 +58,3 @@ class MtCreateView(OwnerCreateView):
             return render(request, self.template_name, ctx)
         track.save()
         return redirect(self.success_url)
-        
-# def stream_file(request, pk):
-#     mt = get_object_or_404(Multitrack, id=pk)
-#     response = HttpResponse()
-#     response['Content-Type'] = mt.content_type
-#     response['Content-Length'] = mt.preview.size
-#     response.write(mt.preview)
-#     #[print(f'{key} ==> {value}') for key, value in response.__dict__.items()]
-#     return response
-
-        
-
-

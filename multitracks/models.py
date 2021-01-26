@@ -31,6 +31,7 @@ class Multitrack(models.Model):
     number_channels = models.PositiveIntegerField(default=1)
     #content_type = models.CharField(max_length=256, null=True, help_text='The MIMEType of the file')
     file_zip = models.FileField(upload_to="multitracks/")
+    file_size = models.CharField(max_length=100)
     description = models.TextField()
     band = models.ForeignKey('Band', on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', on_delete=models.SET_NULL, null=True)
