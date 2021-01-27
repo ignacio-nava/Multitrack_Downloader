@@ -11,7 +11,7 @@ class MtListView(OwnerListView):
     template_name = 'multitracks/list.html'
 
     def get(self, request):
-        mt_list = Multitrack.objects.all()
+        mt_list = Multitrack.objects.all().order_by('genre')
         ctx = {
             'mt_list': mt_list
         }
