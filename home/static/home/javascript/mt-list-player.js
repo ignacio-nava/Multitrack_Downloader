@@ -1,4 +1,4 @@
-var icons = Array.from(document.querySelectorAll('i.far'));
+var icons = Array.from(document.querySelectorAll('i.icon-player'));
 var previews = Array.from(document.querySelectorAll('audio'));
 var playing = -1;
 

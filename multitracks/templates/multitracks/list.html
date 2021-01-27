@@ -40,10 +40,7 @@
                     <p class="card-text">
                         Preview <i class="far fa-play-circle fs-6 icon-player"></i> |
                         Multitrack <strong>{{ mt.number_channels }} tracks</strong> ({{ mt.file_size }})
-                        <a href="{{ mt.file_zip.url }}" download>
-                            <svg class="icon-download" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215.52 215.52"><defs><style>.cls-1,.cls-2,.cls-3{fill:none;stroke-linecap:round;}.cls-1,.cls-2{stroke-miterlimit:10;}.cls-1{stroke-width:8px;}.cls-2{stroke-width:20px;}.cls-3{stroke-linejoin:round;stroke-width:15px;}</style></defs><title></title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M211.52,107.76A103.76,103.76,0,1,1,179.68,33"/><path class="cls-2" d="M202.52,65.79h0"/><circle class="cls-3" cx="70.72" cy="147.69" r="24.67"/><line class="cls-3" x1="95.39" y1="147.69" x2="95.39" y2="81.5"/><polygon class="cls-3" points="144.65 74 95.39 81.5 95.39 50.52 144.65 43.02 144.65 74"/><line class="cls-3" x1="136.33" y1="110.54" x2="136.33" y2="164.54"/><line class="cls-3" x1="136.33" y1="164.54" x2="120.76" y2="144.18"/><line class="cls-3" x1="151.89" y1="144.18" x2="136.33" y2="164.54"/></g></g>
-                            </svg>
-                        </a>
+                        <a href="{{ mt.file_zip.url }}" download><i class="far fa-arrow-alt-circle-down fs-6"></i></a>
                     </p>
                     <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#description-{{mt.id}}" aria-expanded="false" aria-controls="collapseExample">Info</button>
                     <div class="collapse" id="description-{{mt.id}}">
