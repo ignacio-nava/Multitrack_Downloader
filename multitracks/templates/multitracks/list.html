@@ -22,37 +22,49 @@
     <p class="text-center fs-5">Search all multitracks by genre or band <em>(soon!)</em></p>
 </div>
 <div class="container py-5 mb-5">
-    <div class="row justify-content-center">
-        {% for mt in mt_list %}
-            <div class="col-lg-5 m-2 px-0 card shadow card-multitack">
-                <div class="card-header">
-                    <h4 class="card-title"><strong>{{ mt.band }}</strong></h4>
-                    <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
+    {% for mt_set in mt_list %}
+        {% if mt_set %}
+            <div class="card card-body mb-2 card-genre shadow">
+                <div class="container">
+                    <h2 class="">
+                        <button class="btn btn-outline-dark btn-genre" type="button" data-bs-toggle="collapse" data-bs-target="#genre-{{mt_set.0.genre.id}}" aria-expanded="false" aria-controls="collapseExample" style="border: 0px;">
+                            <i class="fas fa-chevron-up"></i>
+                        </button> {{ mt_set.0.genre }}
+                    </h2> 
                 </div>
-
-                <div class="card-body">
-                    <audio class="w-100">
-                        <source src="{{ mt.preview.url }}" type="audio/mp3">
-                    </audio>
-                    <p class="fs-5">
-                        <strong>{{ mt.title }}</strong>
-                    <p>
-                    <p class="card-text">
-                        Preview <i class="far fa-play-circle fs-6 icon-player"></i> |
-                        Multitrack <strong>{{ mt.number_channels }} tracks</strong> ({{ mt.file_size }})
-                        <a href="{{ mt.file_zip.url }}" download><i class="far fa-arrow-alt-circle-down fs-6"></i></a>
-                    </p>
-                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#description-{{mt.id}}" aria-expanded="false" aria-controls="collapseExample">Info</button>
-                    <div class="collapse" id="description-{{mt.id}}">
-                        <br>
-                        <p class="text-muted">{{ mt.description }}</p>
-                        <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
-                    </div>
-                    
+                <div class="collapse show row justify-content-center pb-3" id="genre-{{mt_set.0.genre.id}}">
+                    {% for mt in mt_set %}
+                        <div class="col-lg-5 m-2 px-0 card shadow card-multitack">
+                            <div class="card-header">
+                                <h4 class="card-title"><strong>{{ mt.band }}</strong></h4>
+                                <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
+                            </div>
+                            <div class="card-body">
+                                <audio class="w-100">
+                                    <source src="{{ mt.preview.url }}" type="audio/mp3">
+                                </audio>
+                                <p class="fs-5">
+                                    <strong>{{ mt.title }}</strong>
+                                <p>
+                                <p class="card-text">
+                                    Preview <i class="far fa-play-circle fs-6 icon-player"></i> |
+                                    Multitrack <strong>{{ mt.number_channels }} tracks</strong> ({{ mt.file_size }})
+                                    <a href="{{ mt.file_zip.url }}" download><i class="far fa-arrow-alt-circle-down fs-6"></i></a>
+                                </p>
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#description-{{mt.id}}" aria-expanded="false" aria-controls="collapseExample">Info</button>
+                                <div class="collapse" id="description-{{mt.id}}">
+                                    <br>
+                                    <p class="text-muted">{{ mt.description }}</p>
+                                    <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        {% endif %}
+    {% endfor %}
 </div>
 <script src="{% static 'home/javascript/mt-list-player.js' %}"></script>
+<script src="{% static 'home/javascript/mt-list-collapse.js' %}"></script>
 {% endblock %}

@@ -5,15 +5,22 @@ from django.http import HttpResponse
 from home.owner import OwnerListView, OwnerCreateView
 from .models import Multitrack, Genre, Band
 from .forms import CreateForm
+from .humanize import naturalsize
 
 class MtListView(OwnerListView):
     model = Multitrack
     template_name = 'multitracks/list.html'
 
     def get(self, request):
-        mt_list = Multitrack.objects.all().order_by('genre')
+        #mt_list = Multitrack.objects.all().order_by('genre')
+        genre_list = Genre.objects.all().order_by('name')
+        mt_list = [Multitrack.objects.all().filter(genre__id=g.id).order_by('band') for g in genre_list]
+        print(mt_list)
+
+
         ctx = {
-            'mt_list': mt_list
+            'mt_list': mt_list,
+            'genre_list': genre_list,
         }
         return render(request, self.template_name, ctx)
 
@@ -56,5 +63,6 @@ class MtCreateView(OwnerCreateView):
                 'error_message': 'Multitrack must be ZIP file'
             }
             return render(request, self.template_name, ctx)
+        track.file_size = naturalsize(track.file_zip.size)
         track.save()
         return redirect(self.success_url)
