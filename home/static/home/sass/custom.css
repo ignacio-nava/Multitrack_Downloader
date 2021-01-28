@@ -46,6 +46,10 @@ main h2, main .h2 {
   stroke: #0d6efd;
 }
 
+.card-genre {
+  border: 0.1rem solid #38515e !important;
+}
+
 .icon-player {
   color: #0d6efd;
 }

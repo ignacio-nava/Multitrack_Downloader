@@ -15,9 +15,7 @@ class MtListView(OwnerListView):
         #mt_list = Multitrack.objects.all().order_by('genre')
         genre_list = Genre.objects.all().order_by('name')
         mt_list = [Multitrack.objects.all().filter(genre__id=g.id).order_by('band') for g in genre_list]
-        print(mt_list)
-
-
+        
         ctx = {
             'mt_list': mt_list,
             'genre_list': genre_list,
