@@ -35,9 +35,22 @@ class Multitrack(models.Model):
     description = models.TextField()
     band = models.ForeignKey('Band', on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', on_delete=models.SET_NULL, null=True)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    # Favorites
+    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                through='Fav', related_name='favorite_multitracks')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
+
+class Fav(models.Model):
+    multitrack = models.ForeignKey(Multitrack, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('multitrack', 'user')
+
+    def __str__(self):
+        return f'{self.user.username} likes {self.multitrack.title}'
