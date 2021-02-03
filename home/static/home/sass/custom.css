@@ -58,6 +58,11 @@ main h2, main .h2 {
   background-color: #f4f4f4;
 }
 
+#google-login {
+  background-color: #dd4b39;
+  border: #dd4b39;
+}
+
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {
     font-size: 3.5rem;
