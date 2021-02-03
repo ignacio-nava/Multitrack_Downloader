@@ -1,6 +1,7 @@
 db.sqlite3
 .DS_Store
 .vscode
+dj4eProject/google_settings.py
 home/static/home/node_modules
 home/static/home/sass/custom.scss
 home/static/home/sass/reducido.css
