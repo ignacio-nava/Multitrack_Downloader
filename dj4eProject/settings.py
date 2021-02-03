@@ -142,7 +142,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Social 
+# Social: Create your own file 'google_settings.py' with SOCIAL_AUTH_GOOGLE_OAUTH2_KEY and SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET 
+# Here is ignored.
 try:
     from . import google_settings
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = google_settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
