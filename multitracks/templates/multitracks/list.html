@@ -19,7 +19,42 @@
             </div>
         </div>
     </div>
-    <p class="text-center fs-5">Search all multitracks by genre or band <em>(soon!)</em></p>
+    <!-- <p class="text-center fs-5">Search all multitracks by genre or band <em>(soon!)</em></p> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="row">
+                    <div class="col-3 text-start">
+                        <button type="button" class="btn btn-dark shadow" id="buttonCollapse" onclick="collapseAll()">Collapse All</button>
+                    </div>
+                    <div class="col-6 text-start">
+                        <div class="btn-group">
+                            <button id="btnDropGenre" type="button" class="btn btn-dark dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
+                              Show
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnDropGenre">
+                                <li>
+                                    <a class="dropdown-item" id="show-All" onclick="showAll()">
+                                        All
+                                    </a>
+                                </li>
+                                {% for genre in genre_list %}
+                                    <li>
+                                        <a class="dropdown-item" id="show-{{ genre.name }}" onclick="showGenre({{ forloop.counter0 }})">
+                                            {{ genre.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-6 col-sm-12 text-center" style="background-color: cornsilk;">
+                <button type="button" class="btn">Search</button>
+            </div> -->
+        </div>
+    </div>
     </div>
 </div>
 <div class="container py-5 mb-5">
@@ -28,9 +63,9 @@
             <div class="card card-body mb-2 card-genre shadow card-genre">
                 <div class="container">
                     <p class="h3" id="#title-genre">
-                        <button class="btn btn-outline-dark btn-genre" type="button" data-bs-toggle="collapse" data-bs-target="#genre-{{mt_set.0.genre.id}}" aria-expanded="false" aria-controls="collapseExample" style="border: 0px;">
+                        <button class="btn btn-outline-dark btn-genre collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genre-{{mt_set.0.genre.id}}" aria-expanded="false" aria-controls="collapseExample" style="border: 0px;">
                             <i class="fas fa-chevron-down"></i>
-                        </button> {{ mt_set.0.genre }} <span class="fs-6 text-muted">({{ mt_set|length}} multitracks)</span>
+                        </button>{{ mt_set.0.genre }}<span class="fs-6 text-muted"> ({{ mt_set|length }} multitracks)</span>
                     </p> 
                 </div>
                 <div class="collapse row justify-content-center" id="genre-{{mt_set.0.genre.id}}">
@@ -87,6 +122,33 @@
 <script type="text/javascript" src="{% static 'home/javascript/mt-list-player.js' %}"></script>
 <script type="text/javascript" src="{% static 'home/javascript/mt-list-collapse.js' %}"></script>
 <script type="text/javascript">
+    function showAll() {
+        for (button of buttons) {
+            if (button.className.split(' ').length == 4) {
+                button.click();
+            }
+        }
+    }
+    function collapseAll() {
+        for (button of buttons) {
+            if (button.className.split(' ').length == 3) {
+                button.click();
+            }
+        }
+    }
+    function showGenre(n) {
+        for (i in buttons) {
+            if (i == n) {
+                if (buttons[n].className.split(' ').length == 4) {
+                    buttons[n].click();
+                }
+            } else {
+                if (buttons[i].className.split(' ').length == 3) {
+                    buttons[i].click();
+                }
+            }
+        }
+    }
     function favMt(url, mt_id) {
         console.log('mt_id');
         $.post(url, {},  function(rowz){
