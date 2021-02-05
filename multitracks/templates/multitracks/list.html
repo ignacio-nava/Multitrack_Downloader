@@ -135,12 +135,19 @@
                 button.click();
             }
         }
+        window.scrollTo(0, 0);
+        setTimeout(function() {
+            if (window.scrollY > 0) {
+                window.scrollTo(0, 0);
+            }   
+        }, 450)
     }
     function showGenre(n) {
         for (i in buttons) {
             if (i == n) {
                 if (buttons[n].className.split(' ').length == 4) {
                     buttons[n].click();
+                    buttons[n].scrollIntoView(true);
                 }
             } else {
                 if (buttons[i].className.split(' ').length == 3) {
@@ -159,5 +166,13 @@
             alert('Url failed with '+xhr.status+' '+url);
         });
     }
+</script>
+<script type="text/javascript">
+    window.addEventListener("scroll", function() {
+        var welcome = document.getElementById("welcome");
+        welcome.classList.toggle('fixed-top', window.scrollY > 56);
+        welcome.classList.toggle('shadow-lg', window.scrollY > 56);
+        welcome.classList.toggle('border-dark', window.scrollY > 56);
+    })
 </script>
 {% endblock %}

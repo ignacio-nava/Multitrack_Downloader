@@ -26,6 +26,7 @@ from django.views.static import serve
 urlpatterns = [
     path('', include('home.urls')),
     path('multitracks/', include('multitracks.urls')),
+    path('mixes/', include('mixes.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
