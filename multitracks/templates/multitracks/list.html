@@ -23,41 +23,25 @@
             </div>
         </div>
     </div>
-    <!-- <p class="text-center fs-5">Search all multitracks by genre or band <em>(soon!)</em></p> -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-sm-12">
-                <div class="row">
-                    <div class="col-3 text-start">
-                        <button type="button" class="btn btn-dark shadow" id="buttonCollapse" onclick="collapseAll()">Collapse All</button>
-                    </div>
-                    <div class="col-6 text-start">
-                        <div class="btn-group">
-                            <button id="btnDropGenre" type="button" class="btn btn-dark dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
-                              Show
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnDropGenre">
-                                <li>
-                                    <a class="dropdown-item" id="show-All" onclick="showAll()">
-                                        All
-                                    </a>
-                                </li>
-                                {% for genre in genre_list %}
-                                    <li>
-                                        <a class="dropdown-item" id="show-{{ genre.name }}" onclick="showGenre({{ forloop.counter0 }})">
-                                            {{ genre.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col-lg-6 col-sm-12 text-center" style="background-color: cornsilk;">
-                <button type="button" class="btn">Search</button>
-            </div> -->
-        </div>
+    <div class="container" id="nav-mt-list">
+        <button type="button" class="btn btn-dark shadow" id="buttonCollapse" onclick="collapseAll()">Collapse All</button>
+        <button id="btnDropGenre" type="button" class="btn btn-dark dropdown-toggle shadow" data-bs-toggle="dropdown" aria-expanded="false">
+            Show
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btnDropGenre">
+              <li>
+                  <a class="dropdown-item" id="show-All" onclick="showAll()">
+                      All
+                  </a>
+              </li>
+              {% for genre in genre_list %}
+                  <li>
+                      <a class="dropdown-item" id="show-{{ genre.name }}" onclick="showGenre({{ forloop.counter0 }})">
+                          {{ genre.name }}
+                      </a>
+                  </li>
+              {% endfor %}
+          </ul>
     </div>
     </div>
 </div>
