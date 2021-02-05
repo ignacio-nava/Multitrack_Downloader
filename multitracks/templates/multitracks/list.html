@@ -5,6 +5,10 @@
         body {
             overflow: auto !important;
         }
+
+        .fixed-medium {
+            padding-top: 12.2rem !important;
+        }
     </style>
 {% endblock %}
 
@@ -57,7 +61,7 @@
     </div>
     </div>
 </div>
-<div class="container py-5 mb-5">
+<div class="container py-5 mb-5" id="mt-list-container">
     {% for mt_set in mt_list %}
         {% if mt_set %}
             <div class="card card-body mb-2 card-genre shadow card-genre">
@@ -170,9 +174,11 @@
 <script type="text/javascript">
     window.addEventListener("scroll", function() {
         var welcome = document.getElementById("welcome");
+        var mt_list_container = document.getElementById("mt-list-container");
         welcome.classList.toggle('fixed-top', window.scrollY > 56);
         welcome.classList.toggle('shadow-lg', window.scrollY > 56);
         welcome.classList.toggle('border-dark', window.scrollY > 56);
+        mt_list_container.classList.toggle('fixed-medium', window.scrollY > 56);
     })
 </script>
 {% endblock %}
