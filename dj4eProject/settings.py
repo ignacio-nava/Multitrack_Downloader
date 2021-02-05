@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 APP_NAME = 'Multitrack Downloader'
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3^j+jrn)mm8x0f*x1s(nl6o0m&simi$z7($(13-vanapi++5bh'
+from . import project_settings
+SECRET_KEY = project_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -2,6 +2,7 @@ db.sqlite3
 .DS_Store
 .vscode
 dj4eProject/google_settings.py
+dj4eProject/project_settings.py
 dj4eProject/__pycache__/google_settings.cpython-37.pyc
 dj4eProject/__pycache__/settings.cpython-37.pyc
 home/static/home/node_modules
