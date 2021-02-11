@@ -45,6 +45,11 @@ class Multitrack(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self, *args, **kwargs):
+        self.preview.delete()
+        self.file_zip.delete()
+        super().delete(*args, **kwargs)
+
 class Fav(models.Model):
     multitrack = models.ForeignKey(Multitrack, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
