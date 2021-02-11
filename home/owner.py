@@ -1,6 +1,4 @@
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
-from django.contrib.auth.mixins import UserPassesTestMixin
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -16,7 +14,7 @@ class OwnerDetailView(DetailView):
     """
 
 
-class OwnerCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
+class OwnerCreateView(LoginRequiredMixin, CreateView):
     """
     Sub-class of the CreateView to automatically pass the Request to the Form
     and add the owner to the saved object.
@@ -29,10 +27,6 @@ class OwnerCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
         object.owner = self.request.user
         object.save()
         return super(OwnerCreateView, self).form_valid(form)
-
-    def test_func(self):
-        return self.request.user.is_staff
-
 
 class OwnerUpdateView(LoginRequiredMixin, UpdateView):
     """
