@@ -9,11 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{% if error_message %}
-    <p>
-        <strong>{{ error_message }}</strong>
-    </p>
-{% endif %}
 <div class="py-3 border-bottom border-2" id="welcome">
     <div class="container">
         <div class="row row-cols-1 g-2 g-lg-3">
@@ -28,30 +23,30 @@
 </div>
 <div class="container px-5 py-5 mb-5">
     <div class="row">
-        <div class="col-md-12 card shadow px-5 mx-auto" id="card-form-mt">
+        <div class="col-md-12 card shadow px-5 mx-auto card-genre" id="card-form-mt">
             <form action="" method="post" id="upload_form" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <!-- Browse Files -->
                     <div class="col-lg-6 my-3">
-                        <label class="form-label" for="id_file_zip">Multitrack File</label>
+                        <label class="form-label" for="id_file_zip">Multitrack File (*)</label>
                         <input class="form-control" type="file" id="id_file_zip" name="file_zip" required=""/>
                         <small id="previewHelp" class="form-text text-muted">Only zip files.</small>
                     </div>
                     <div class="col-lg-6 my-3">
-                        <label class="form-label" for="id_preview">Preview</label>
+                        <label class="form-label" for="id_preview">Preview (*)</label>
                         <input class="form-control" type="file" id="id_preview" name="preview" required=""/>
                         <small class="form-text text-muted" id="previewHelp">Only mp3 files.</small>
                     </div>
                     <div class="col-lg-9 my-3">
                         <div class="form-group">
-                            <label class="form-label" for="id_title">Title</label>
+                            <label class="form-label" for="id_title">Title (*)</label>
                             <input class="form-control" type="text" id="id_title" name="title" maxlength="200" placeholder="Multitrack's title" required="">
                           </div>
                     </div>
                     <div class="col-lg-3 my-3">
                         <div class="form-group">
-                            <label class="form-label" for="id_number_channels">Number Channels</label>
+                            <label class="form-label" for="id_number_channels">Number Channels (*)</label>
                             <input class="form-control" type="number" id="id_number_channels" name="number_channels" min="1" placeholder="Multitrack's number channels" required="">
                         </div>
                         <div class="invalid-feedback">
@@ -59,7 +54,7 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-6 my-3">
-                        <label for="genre" class="form-label">Select Genre</label>
+                        <label for="genre" class="form-label">Select a Genre (*)</label>
                         <select class="form-control" id="id_genre" name="genre" required>
                             <option value="" selected>Choose...</option>
                             {% for genre in genre_list %}
@@ -67,11 +62,11 @@
                             {% endfor %}
                         </select>
                         <div class="invalid-feedback">
-                            Please select a valid genre.
+                            Please select a genre.
                         </div>
                     </div>
                     <div class="form-group col-lg-6 my-3">
-                        <label for="band" class="form-label">Select Band</label>
+                        <label for="band" class="form-label">Select an Artist (*)</label>
                         <select class="form-control" id="id_band" name="band" required>
                             <option value="" selected>Choose...</option>
                             {% for band in band_list %}
@@ -88,7 +83,7 @@
                     <!-- Description -->
                     <div class="col-12 my-3">
                         <div class="form-group">
-                            <label class="form-label" for="id_description">Description</label>
+                            <label class="form-label" for="id_description">Description (*)</label>
                             <textarea class="form-control" id="id_description" name="description" rows="10" required=""></textarea>
                         </div>
                     </div>
@@ -106,4 +101,9 @@
         </div>
     </div>
 </div>
+{% if error_message %}
+<script>
+    alert('{{ error_message }}');
+</script>
+{% endif %}
 {% endblock %}
