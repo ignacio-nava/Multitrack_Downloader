@@ -7,6 +7,14 @@
     <a class="navbar-brand" href="{% url 'home:homepage' %}">
       <span>MULTITRACK DOWNLOADER</span>
     </a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{% url 'multitracks:all' %}">Multitracks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{% url 'mixes:all' %}">Mix</a>
+      </li>
+    </ul>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -30,27 +38,23 @@
               {% if user.socialuser %}
                 <img class="rounded-circle border border-light mx-1" style="width: 20px;" src="{{ user.socialuser.avatar_url }}">
               {% else %}
-                {% if user|gravatar %}
-                  <img class="rounded-circle border border-light" style="width: 20px;" src="{{ user|gravatar:70 }}">
-                {% else %}
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                </svg>
-                {% endif %}
+                <img class="rounded-circle border border-light" style="width: 20px;" src="{{ user|gravatar:70 }}">
               {% endif %}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="{% url 'mixes:mix_create' %}">Upload Mix</a>
+              </li>
               <li><hr class="dropdown-divider"></li>
               <li>
-                <a class="dropdown-item" href="{% url 'logout' %}?next={% url 'home:homepage' %}">Logout</a>
+                <a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
               </li>
             </ul>
           </li>
         </div>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'login' %}?next={% url 'home:homepage' %}">
+            <a class="nav-link active" aria-current="page" href="{% url 'login' %}?next={{ request.path }}">
               Login
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 20 20">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
