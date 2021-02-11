@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -17,7 +17,6 @@ class MtListView(OwnerListView):
     template_name = 'multitracks/list.html'
 
     def get(self, request):
-        #mt_list = Multitrack.objects.all().order_by('genre')
         genre_list = Genre.objects.all().order_by('name')
         mt_list = [Multitrack.objects.all().filter(genre__id=g.id).order_by('band') for g in genre_list]
         
@@ -33,19 +32,21 @@ class MtListView(OwnerListView):
         }
         return render(request, self.template_name, ctx)
 
-class MtCreateView(OwnerCreateView):
+    def test_func(self):
+        return self.request.user.is_staff
+
+class MtCreateView(UserPassesTestMixin, OwnerCreateView):
     model = Multitrack
     template_name = 'multitracks/form.html'
+    genre_list = Genre.objects.all().order_by('name')
+    band_list = Band.objects.all().order_by('name')
 
     def get(self, request, pk=None):
         form = CreateForm()
-        genre_list = Genre.objects.all().order_by('name')
-        band_list = Band.objects.all().order_by('name')
-
         ctx = {
             'form': form,
-            'genre_list': genre_list,
-            'band_list': band_list,
+            'genre_list': self.genre_list,
+            'band_list': self.band_list,
         }
         return render(request, self.template_name, ctx)
 
@@ -63,6 +64,8 @@ class MtCreateView(OwnerCreateView):
         if not preview_type == 'mp3':
             ctx = {
                 'form': form,
+                'genre_list': self.genre_list,
+                'band_list': self.band_list,
                 'error_message': 'Preview must be MP3 file'
             }
             return render(request, self.template_name, ctx)
@@ -70,12 +73,18 @@ class MtCreateView(OwnerCreateView):
         if not file_zip_type == 'zip':
             ctx = {
                 'form': form,
+                'genre_list': self.genre_list,
+                'band_list': self.band_list,
                 'error_message': 'Multitrack must be ZIP file'
             }
             return render(request, self.template_name, ctx)
         track.file_size = naturalsize(track.file_zip.size)
         track.save()
         return redirect(self.success_url)
+
+    def test_func(self):
+        return self.request.user.is_staff
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AddFavoriteView(LoginRequiredMixin, View):
