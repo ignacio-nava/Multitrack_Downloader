@@ -1,0 +1,140 @@
+{% extends "base_menu.html" %}
+{% load static %}
+{% load humanize %}
+{% load app_tags %}
+{% block head %}
+    <style>
+        body {
+            overflow: auto !important;
+        }
+
+        .fixed-medium {
+            padding-top: 12.2rem !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 mb-5" id="mt-list-container">
+    <div class="card card-body mb-2 card-genre shadow card-genre">
+        <div class="col px-0 mb-4 card shadow card-multitack">
+            <div class="card-header">
+                <p class="h4">
+                    <a href="{% url 'mixes:mix_detail' mix.id %}" style="text-decoration: none; color: #212529;">
+                        <strong>{{ mix.multitrack.band }} - {{ mix.multitrack.title }}</strong>
+                    </a>
+                    <span class="h6">
+                        {% if user == mix.owner %}
+                            <a href="{% url 'mixes:mix_update' mix.id %}?next={{ request.path }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{% url 'mixes:mix_delete' mix.id %}"><i class="fas fa-trash-alt"></i></a>
+                        {% endif %}
+                    </span>
+                    <div>
+                        <p class="text-muted fs-6">{{ mix.multitrack.genre }}</p>
+                    </div>
+                </p>
+            </div>
+            <div class="card-body pt-2">
+                <div id="mix-owner">
+                    <p class="h6">
+                        {% if mix.owner.socialuser %}
+                            <img class="rounded-circle border border-dark mx-1" style="width: 30px;" src="{{ mix.owner.socialuser.avatar_url }}">
+                            <em>{{ mix.owner.get_full_name }}'s mix</em>
+                        {% else %}
+                            <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ mix.owner|gravatar:70 }}">
+                            <em>{{ mix }}</em>
+                        {% endif %}
+                    </p>
+                </div>
+                <div id="mix-audio">
+                    <audio class="w-100" src="{{ mix.mix_file.url }}" controls></audio>
+                </div>
+                <div id="mix-time-info">
+                    <small class="card-subtitle text-muted">
+                        Created: {{ mix.created_at|naturaltime }}
+                     </small><br>
+                     {% if mix.created_at|naturaltime != mix.updated_at|naturaltime %}
+                         <small class="card-subtitle text-muted">
+                             Updated: {{ mix.updated_at|naturaltime }}
+                         </small>
+                     {% endif %}
+                </div>
+                <div class="py-3" id="mix-description">
+                    <p>{{ mix.description }}</p>
+                </div>
+                <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#comments" aria-expanded="false" aria-controls="collapseExample">Comments</button>
+                <div class="collapse show" id="comments">
+                    <div class="container">
+                        <hr class="my-3 featurette-divider">
+                    </div>
+                    {% for comment in comments_list %}
+                        <div class="container" id="comment-{{ comment.id }}">
+                            <div class="d-flex flex-row p-2 me-2">
+                                <div class="px-2 mt-1">
+                                    {% if comment.owner.socialuser %}
+                                        <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ comment.owner.socialuser.avatar_url }}">
+                                    {% else %}
+                                        <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ comment.owner|gravatar:70 }}">
+                                    {% endif %}
+                                    </div>
+                                <div class="row px-2">
+                                    <div class="col-12">
+                                        <p class="pb-0 mb-0">
+                                            {% if comment.owner.socialuser %}
+                                                <strong>{{ comment.owner.get_full_name }}</strong> 
+                                            {% else %}
+                                                <strong>{{ comment.owner.username }}</strong> 
+                                            {% endif %}
+                                            <span class="text-muted">{{ comment.created_at }}</span>
+                                            {% if comment.created_at|naturaltime != comment.updated_at|naturaltime %}
+                                                <small class="card-subtitle text-muted">
+                                                    <em>(Edited)</em>
+                                                </small>
+                                            {% endif %}
+                                            <span>
+                                                {% if user == comment.owner %}
+                                                    <a href="{% url 'mixes:mix_comment_update' comment.id %}"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="{% url 'mixes:mix_comment_delete' comment.id %}"><i class="fas fa-trash-alt"></i></a>
+                                                {% endif %}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="mt-0">{{ comment.text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                        <div class="container" id="comment-form-{{mix.id}}">
+                            <div class="p-2" id="comment-form-{{mix.id}}">
+                                <form method="post" action="{% url 'mixes:mix_comment_create' mix.id %}?next={{ request.path }}">
+                                    {% csrf_token %}
+                                    <div class="d-flex flex-row">
+                                        <div class="px-2 mt-1">
+                                            {% if user.socialuser %}
+                                                <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ user.socialuser.avatar_url }}">
+                                            {% else %}
+                                                <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ user|gravatar:70 }}">
+                                            {% endif %}
+                                        </div>
+                                        <div class="ps-2 w-100">
+                                            <textarea class="form-control" id="id_text" name="text" minlength="3" rows="5" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end pt-2">
+                                        <div class="ps-2">
+                                            <input type="submit" value="Make" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

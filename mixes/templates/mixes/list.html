@@ -1,0 +1,110 @@
+{% extends "base_menu.html" %}
+{% load static %}
+{% load humanize %}
+{% load app_tags %}
+{% block head %}
+    <style>
+        body {
+            overflow: auto !important;
+        }
+
+        .fixed-medium {
+            padding-top: 12.2rem !important;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="py-3 border-bottom border-2" id="welcome">
+    <div class="container">
+        <div class="row row-cols-1 g-2 g-lg-3">
+            <div class="col d-flex justify-content-center">
+                <div class="pb-3">
+                    <h1>Multitrack List</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="nav-mix-list">
+        <button id="btnDropOrderBy" type="button" class="btn btn-dark dropdown-toggle shadow me-2" data-bs-toggle="dropdown" aria-expanded="false">
+            Show by
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btnDropOrderBy">
+              <li>
+              </li>
+              {% for tag in search_tags %}
+                  <li>
+                      <a class="dropdown-item" href="{% url 'mixes:search_by_key' slug=tag|slugify  %}">
+                          {{ tag }}
+                      </a>
+                  </li>
+              {% endfor %}
+          </ul>
+          <span id="showing-by"><em>{{ search_by }}</em></span>
+    </div>
+</div>
+<div class="container py-5 mb-5" id="mt-list-container">
+    <div class="card card-body mb-2 card-genre shadow card-genre">
+        {% for mix, comments_count in mixes_list %}
+            <div class="col px-0 mb-4 card shadow card-multitack">
+                <div class="card-header">
+                    <p class="h4">
+                        <a href="{% url 'mixes:mix_detail' mix.id %}" style="text-decoration: none; color: #212529;">
+                            <strong>{{ mix.multitrack.band }} - {{ mix.multitrack.title }}</strong>
+                        </a>
+                        <span class="h6">
+                            {% if user == mix.owner %}
+                                <a href="{% url 'mixes:mix_update' mix.id %}"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{% url 'mixes:mix_delete' mix.id %}"><i class="fas fa-trash-alt"></i></a>
+                            {% endif %}
+                        </span>
+                    </p>
+                    <div>
+                        <p class="text-muted fs-6">{{ mix.multitrack.genre }}</p>
+                    </div>
+                </div>
+                <div class="card-body pt-2">
+                    <div id="mix-owner-{{ mix.id }}">
+                        <p class="h6">
+                            {% if mix.owner.socialuser %}
+                                <img class="rounded-circle border border-dark mx-1" style="width: 30px;" src="{{ mix.owner.socialuser.avatar_url }}">
+                                <em>{{ mix.owner.get_full_name }}'s mix</em>
+                            {% else %}
+                                <img class="rounded-circle border border-dark" style="width: 30px;" src="{{ mix.owner|gravatar:70 }}">
+                                <em>{{ mix }}</em>
+                            {% endif %}
+                            <a class="ms-2" href="{% url 'mixes:mix_detail' mix.id %}" style="text-decoration: none;">
+                                ({{ comments_count }} 
+                                {% if comments_count == 1 %}
+                                    Comment)
+                                {% else %}
+                                    Comments)
+                                {% endif %}
+                            </a>
+                        </p>
+                    </div>
+                    <div id="mix-time-info-{{ mix.id }}">
+                        <small class="card-subtitle text-muted">
+                            Created: {{ mix.created_at|naturaltime }}
+                         </small><br>
+                         {% if mix.created_at|naturaltime != mix.updated_at|naturaltime %}
+                             <small class="card-subtitle text-muted">
+                                 Updated: {{ mix.updated_at|naturaltime }}
+                             </small>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript">
+    window.addEventListener("scroll", function() {
+        var welcome = document.getElementById("welcome");
+        var mt_list_container = document.getElementById("mt-list-container");
+        welcome.classList.toggle('fixed-top', window.scrollY > 56);
+        welcome.classList.toggle('shadow-lg', window.scrollY > 56);
+        welcome.classList.toggle('border-dark', window.scrollY > 56);
+        mt_list_container.classList.toggle('fixed-medium', window.scrollY > 56);
+    })
+</script>
+{% endblock %}

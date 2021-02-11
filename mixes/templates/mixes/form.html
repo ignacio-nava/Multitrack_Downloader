@@ -1,0 +1,88 @@
+{% extends "base_menu.html" %}
+
+{% block head %}
+    <style>
+        body {
+            overflow: auto !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="py-3 border-bottom border-2" id="welcome">
+    <div class="container">
+        <div class="row row-cols-1 g-2 g-lg-3">
+            <div class="col d-flex justify-content-center">
+                <div class="pb-3">
+                    <h1>Mix's Upload Form</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center fs-5">Complete this form to upload your mix</p>
+</div>
+<div class="container px-5 py-5 mb-5">
+    <div class="row">
+        <div class="col-md-12 card shadow px-5 mx-auto  card-genre" id="card-form-mt">
+            <form action="" method="post" id="upload_mix_form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <!-- Multitrack selector -->
+                    <div class="col-lg-6 my-3">
+                        <label for="multitrack" class="form-label">Select a Multitrack (*)</label>
+                        <select class="form-control" id="id_multitrack" name="multitrack" required>
+                            {% if not form.initial %}
+                                <option value="" selected>Choose...</option>
+                            {% endif %}
+                            {% for mt in mt_list %}
+                                {% if mt.id == form.initial.multitrack %}
+                                    <option value="{{ mt.id }}" selected>{{ mt}}</option>
+                                {% else %}
+                                    <option value="{{ mt.id }}">{{ mt}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a genre.
+                        </div>
+                    </div>
+                    <!-- Browse File -->
+                    <div class="col-lg-6 my-3 custom-file">
+                        <label class="form-label" for="id_file_zip">Multitrack File (*)</label>
+                        <input class="form-control custom-file-input" type="file" id="id_mix_file" name="mix_file" {% if not mix %}required=""{% endif%}/>
+                        <small class="form-text text-muted">
+                        {% if mix %}
+                                Current file: {{ mix.mix_file.url }}
+                        {% endif%}
+                        </small>
+                        <p>
+                            <small id="previewHelp" class="form-text text-muted">Only wav files.</small>
+                        </p>
+                    </div>
+                    <!-- Description -->
+                    <div class="col-12 my-3">
+                        <div class="form-group">
+                            <label class="form-label" for="id_description">Description</label>
+                            <textarea class="form-control" id="id_description" name="description" rows="10">{{ mix.description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <hr class="my-3 featurette-divider">
+                    </div>
+                    <div class="col-lg-2 col-sm-4 p-2 ms-auto my-3">
+                        <input type="submit" class="w-100 btn btn-lg btn-primary"  value="Submit" />
+                    </div>
+                    <div class="col-lg-2 col-sm-4 p-2 me-auto my-3">
+                        <input type="submit" class="w-100 btn btn-lg btn-primary"  value="Cancel" onclick="window.location.href='{% url 'mixes:all' %}'; return false;" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% if error_message %}
+<script>
+    alert('{{ error_message }}');
+</script>
+{% endif %}
+{% endblock %}

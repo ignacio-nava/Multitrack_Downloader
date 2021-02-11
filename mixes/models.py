@@ -18,12 +18,16 @@ class Mix(models.Model):
     def __str__(self):
         return f"{self.owner}'s mix"
 
+    def delete(self, *args, **kwargs):
+        self.mix_file.delete()
+        super().delete(*args, **kwargs)
+
 class Comment(models.Model):
     text = models.TextField(
         validators=[MinLengthValidator(3, "Comment must be greater than 3 characters")]
         )
     mix = models.ForeignKey(Mix, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
