@@ -49,7 +49,7 @@
         {% if mt_set %}
             <div class="card card-body mb-2 card-genre shadow card-genre">
                 <div class="container">
-                    <p class="h3" id="#title-genre">
+                    <p class="h3" id="title-genre-{{ forloop.counter0 }}">
                         <button class="btn btn-outline-dark btn-genre collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genre-{{mt_set.0.genre.id}}" aria-expanded="false" aria-controls="collapseExample" style="border: 0px;">
                             <i class="fas fa-chevron-down"></i>
                         </button>{{ mt_set.0.genre }}<span class="fs-6 text-muted"> ({{ mt_set|length }} multitracks)</span>
@@ -59,13 +59,13 @@
                     {% for mt in mt_set %}
                         <div class="col-lg-5 col-sm-10 m-2 px-0 card shadow card-multitack">
                             <div class="card-header">
-                                <h4 class="card-title">{{ mt.band }}
+                                <h4 class="card-title">{{ mt.artist }}
                                 </h4>
                                 <h6 class="card-subtitle text-muted">{{ mt.genre }}</h6>
                             </div>
                             <div class="card-body">
                                 <audio class="w-100">
-                                    <source src="{{ mt.preview.url }}" type="audio/mp3">
+                                    <source src="{{ mt.preview }}" type="audio/mp3">
                                 </audio>
                                 <p class="h3">
                                     <strong>{{ mt.title }}</strong>
@@ -89,13 +89,15 @@
                                 <p class="card-text">
                                     Preview <i class="far fa-play-circle fs-6 icon-player"></i> |
                                     Multitrack <strong>{{ mt.number_channels }} tracks</strong> ({{ mt.file_size }})
-                                    <a href="{{ mt.file_zip.url }}" download><i class="far fa-arrow-alt-circle-down fs-6"></i></a>
+                                    <a href="{{ mt.file_zip }}" download><i class="far fa-arrow-alt-circle-down fs-6"></i></a>
                                 </p>
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#description-{{mt.id}}" aria-expanded="false" aria-controls="collapseExample">Info</button>
                                 <div class="collapse" id="description-{{mt.id}}">
                                     <br>
                                     <p class="text-muted">{{ mt.description }}</p>
-                                    <p class="card-text">Contact the artist <a href="{{ mt.band.contact }}" target="_blank">here</a></p>
+                                    {% if mt.artist.contact %}
+                                        <p class="card-text">Contact the artist <a href="{{ mt.artist.contact }}" target="_blank">here</a></p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -134,7 +136,9 @@
             if (i == n) {
                 if (buttons[n].className.split(' ').length == 4) {
                     buttons[n].click();
-                    buttons[n].scrollIntoView(true);
+                    setTimeout(function() {
+                        window.scrollTo(0, 0);
+                    }, 200)
                 }
             } else {
                 if (buttons[i].className.split(' ').length == 3) {
