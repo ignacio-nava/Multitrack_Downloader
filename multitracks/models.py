@@ -11,12 +11,10 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
-class Band(models.Model):
+class Artist(models.Model):
     name = models.CharField(
         max_length=200,
-        validators=[MinLengthValidator(2, "Tittle must be grater than 2 characters")]   
-    )
-    #genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
+        validators=[MinLengthValidator(2, "Tittle must be grater than 2 characters")])
     contact = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
@@ -27,13 +25,12 @@ class Multitrack(models.Model):
         max_length=200,
         validators=[MinLengthValidator(2, "Tittle must be grater than 2 characters")]   
     )
-    preview = models.FileField(upload_to="previews/")
+    preview = models.URLField()
     number_channels = models.PositiveIntegerField(default=1)
-    #content_type = models.CharField(max_length=256, null=True, help_text='The MIMEType of the file')
-    file_zip = models.FileField(upload_to="multitracks/")
+    file_zip = models.URLField()
     file_size = models.CharField(max_length=100)
     description = models.TextField()
-    band = models.ForeignKey('Band', on_delete=models.CASCADE)
+    artist = models.ForeignKey('Artist', on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre', on_delete=models.SET_NULL, null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     # Favorites

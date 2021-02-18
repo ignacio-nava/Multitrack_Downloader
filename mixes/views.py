@@ -23,7 +23,7 @@ class MixListView(OwnerListView):
             'Publish Date': '-created_at',
             'Update Date': '-updated_at',
             'Genre': 'multitrack__genre',
-            'Band' : 'multitrack__band',
+            'Artist' : 'multitrack__artist',
         }
         if request.user.is_authenticated:
             search_tags.update({'My Mixes': 1})

@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.db.utils import IntegrityError
 
 from home.owner import OwnerListView, OwnerCreateView
-from .models import Multitrack, Genre, Band, Fav
+from .models import Multitrack, Genre, Artist, Fav
 from .forms import CreateForm
 from .humanize import naturalsize
 
@@ -18,7 +18,7 @@ class MtListView(OwnerListView):
 
     def get(self, request):
         genre_list = Genre.objects.all().order_by('name')
-        mt_list = [Multitrack.objects.all().filter(genre__id=g.id).order_by('band') for g in genre_list]
+        mt_list = [Multitrack.objects.all().filter(genre__id=g.id).order_by('artist') for g in genre_list]
         
         favorites = list()
         if request.user.is_authenticated:
@@ -39,14 +39,14 @@ class MtCreateView(UserPassesTestMixin, OwnerCreateView):
     model = Multitrack
     template_name = 'multitracks/form.html'
     genre_list = Genre.objects.all().order_by('name')
-    band_list = Band.objects.all().order_by('name')
+    artist_list = Artist.objects.all().order_by('name')
 
     def get(self, request, pk=None):
         form = CreateForm()
         ctx = {
             'form': form,
             'genre_list': self.genre_list,
-            'band_list': self.band_list,
+            'artist_list': self.artist_list,
         }
         return render(request, self.template_name, ctx)
 
@@ -65,7 +65,7 @@ class MtCreateView(UserPassesTestMixin, OwnerCreateView):
             ctx = {
                 'form': form,
                 'genre_list': self.genre_list,
-                'band_list': self.band_list,
+                'artist_list': self.artist_list,
                 'error_message': 'Preview must be MP3 file'
             }
             return render(request, self.template_name, ctx)
@@ -74,7 +74,7 @@ class MtCreateView(UserPassesTestMixin, OwnerCreateView):
             ctx = {
                 'form': form,
                 'genre_list': self.genre_list,
-                'band_list': self.band_list,
+                'artist_list': self.artist_list,
                 'error_message': 'Multitrack must be ZIP file'
             }
             return render(request, self.template_name, ctx)

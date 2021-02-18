@@ -49,7 +49,7 @@
                 <div class="card-header">
                     <p class="h4">
                         <a href="{% url 'mixes:mix_detail' mix.id %}" style="text-decoration: none; color: #212529;">
-                            <strong>{{ mix.multitrack.band }} - {{ mix.multitrack.title }}</strong>
+                            <strong>{{ mix.multitrack.artist }} - {{ mix.multitrack.title }}</strong>
                         </a>
                         <span class="h6">
                             {% if user == mix.owner %}

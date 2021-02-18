@@ -1,11 +1,8 @@
 from django import forms
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from .models import Genre, Band, Multitrack
+from .models import Multitrack
 
 class CreateForm(forms.ModelForm):
 
-    # preview = forms.FileField(required=False)
-
     class Meta:
         model = Multitrack
-        fields = ['title', 'number_channels', 'description', 'preview', 'file_zip', 'genre', 'band']
+        fields = ['title', 'number_channels', 'description', 'preview', 'file_zip', 'genre', 'artist']
